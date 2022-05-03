@@ -1,8 +1,5 @@
 import * as React from 'react';
 
-// executed only once
-var aux = 'test';
-
 function getGreetingMessage() {
 
   const d = new Date();
@@ -52,28 +49,39 @@ function App() {
       <h3>{getGreetingMessage()}</h3>
 
       <hr />
-
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" />
+      <Search />
 
       <hr />
+      <List list={list} />
 
-      {/* lets render a list*/}
-      <ul>
-        {
-          list.map(function (item) {
-            return (
-              <li key={item.objectID}>
-                <span>
-                  <a href={item.url}>{item.title}, </a>
-                </span>
-                <span>{item.author}</span>
-              </li>
-            );
-          })
-        }
-      </ul>
+    </div>
+  );
+}
 
+function List({list}) {
+  return (
+    <ul>
+      {
+        list.map(function (item) {
+          return (
+            <li key={item.objectID}>
+              <span>
+                <a href={item.url}>{item.title}, </a>
+              </span>
+              <span>{item.author}</span>
+            </li>
+          );
+        })
+      }
+    </ul>
+  );
+}
+
+function Search() {
+  return (
+    <div>
+      <label htmlFor="search">Search: </label>
+      <input id="search" type="text" />
     </div>
   );
 }
