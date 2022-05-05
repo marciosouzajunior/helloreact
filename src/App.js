@@ -37,6 +37,23 @@ const App = () => {
     },
   ];
 
+  const [searchTerm, setSearchTerm] = React.useState('');
+
+  function handleChange(event) {
+    setSearchTerm(event.target.value);
+  }
+
+  const filteredStories = stories.filter(function (item) {
+    return item.title.includes(searchTerm);
+  });
+
+  const [fibTerm, setFibTerm] = React.useState(0);
+
+  function fibInputChange(event) {
+    //console.log(event.target.value);
+    setFibTerm(event.target.value);
+  }
+
   return (
     <div>
 
@@ -44,10 +61,19 @@ const App = () => {
       <h3>{getGreetingMessage()}</h3>
 
       <hr />
-      <Search />
+      <Search onSearchChange={handleChange} />
 
       <hr />
-      <List list={stories} />
+      <List list={filteredStories} />
+
+      <h3>Fibonnaci</h3>
+
+      <hr />
+      <label htmlFor="fibInput">Number of terms: </label>
+      <input id="fibInput" type="text" onChange={fibInputChange} />
+
+      <hr />
+      <Fib term={fibTerm} />
 
     </div>
   );
@@ -77,21 +103,38 @@ function Item(props) {
   );
 }
 
-function Search() {
-
-  const [searchTerm, setSearchTerm] = React.useState('');
-
-  function handleChange(event) {
-    setSearchTerm(event.target.value);
-  }
-
+function Search(props) {
   return (
     <div>
       <label htmlFor="search">Search: </label>
-      <input id="search" type="text" onChange={handleChange} />
-      <p>Search term: {searchTerm} </p>
+      <input id="search" type="text" onChange={props.onSearchChange} />
     </div>
   );
+}
+
+function Fib(props) {
+
+  function calcFib(term){
+    
+    if (term <= 1){
+      return term;
+    }
+    return calcFib(term-1) + calcFib(term-2);
+  }
+
+  let arr = [];
+  for(let i = 0; i < props.term; i++){
+    arr.push(calcFib(i));
+  }
+
+  return (
+    <p>
+        {arr.map(function(item){
+          return item + ", ";
+        })}
+    </p>
+  );
+
 }
 
 export default App;
