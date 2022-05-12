@@ -54,7 +54,7 @@ const App = () => {
       <h3>{getGreetingMessage()}</h3>
 
       <hr />
-      <Search onSearchChange={handleChange} />
+      <Search search={searchTerm} onSearchChange={handleChange} />
 
       <hr />
       <List list={filteredStories} />
@@ -91,7 +91,11 @@ function Search(props) {
   return (
     <div>
       <label htmlFor="search">Search: </label>
-      <input id="search" type="text" onChange={props.onSearchChange} />
+      <input
+        id="search"
+        type="text"
+        value={props.search}
+        onChange={props.onSearchChange} />
     </div>
   );
 }
